@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+<div class="top-item">
+  <main class="form-signin w-100 m-auto">
+    <form action="/register" method="POST" autocomplete="off">
+      <img class="mb-4" src="/Images/BHISlogo.png" alt="" width="250" height="250">
+      <h1 class="h3 mb-3 fw-normal">Enter your information to register</h1>
+
+      <div class="form-floating">
+        <input type="email" class="form-control" name="email" placeholder="name@example.com" required>
+        <label for="Email">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least 1 number, 1 uppercase letter, 1 lowercase letter, and at least 8 or more characters" placeholder="Password"
+          required>
+        <label for="Password">Password</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" class="form-control" name="verifiedPassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least 1 number, 1 uppercase letter, 1 lowercase letter, and at least 8 or more characters"
+          placeholder="Retype Password" required>
+        <label for="verifiedPassword">Retype Password</label>
+      </div>
+
+      <p>Already have an account? <a href="/login">Click to login</a></p>
+      <p class="error"><%=  errorMessage  %></p>
+
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2008</p>
+    </form>
+  </main>
+</div>
+
+<%- include('partials/footer') %>

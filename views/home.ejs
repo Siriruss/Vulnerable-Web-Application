@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+
+
+<div class="top-container top-item">
+  <img class="Logo" src="Images/BHISlogo.png" alt="BHIS Logo Image">
+</div>
+
+<div class="middle-container">
+  <div class="Getting Started" id="gettingStarted">
+    <img src="" alt="">
+    <h2>Welcome</h2>
+    <p>to the Black Hills Information Security Vulnerable Web Application</p>
+    <p>Select any vulnerability below to see and begin challenges related to that vulnerability.</p>
+  </div>
+  <hr>
+  <div class='' id="challenges">
+    <div class="row">
+      <div class="flex-child">
+        <a href="/xsshome"><img class="XSS-image" src="Images/icons8-hacking-100.png" alt="XSS Image"></a>
+        <h3>Cross Site Scripting (XSS)</h3>
+        <p>Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts are injected into otherwise benign and trusted websites</p>
+      </div>
+      <div class="flex-child">
+        <a href="/ssrfhome"><img class="ssrf-image" src="Images/icons8-hacking-100.png" alt="SSRF Image"></a>
+        <h3>Server-Side Request Forgery (SSRF)</h3>
+        <p>Server-side request forgery (also known as SSRF) is a web security vulnerability that allows an attacker to induce the server-side application to make requests to an unintended location. </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="flex-child">
+        <a href="/sstihome"><img class="ssrf-image" src="Images/icons8-hacking-100.png" alt="SSRF Image"></a>
+        <h3>Server-Side Template Injection (SSTI)</h3>
+        <p>A server-side template injection occurs when an attacker is able to use native template syntax to inject a malicious payload into a template, which is then executed server-side.</p>
+      </div>
+      <div class="flex-child">
+        <a href="/sstihome"><img class="ssrf-image" src="Images/icons8-hacking-100.png" alt="SSRF Image"></a>
+        <h3>New Vulnerability</h3>
+        <p>Description of Vulnerability</p>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+
+<%- include('partials/footer') %>
