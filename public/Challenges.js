@@ -15,3 +15,14 @@ $(document).ready(function () {
   })
 
 })
+
+function check() {
+  document.getElementById('entranceConfirmation').innerHTML = ('Thank you for entering the drawing ' + document.xsschallenge2form.entrantName.value)
+}
+
+function combine() {
+  let firstName = document.xsschallenge3form.entrantFirstName.value
+  let lastName = document.xsschallenge3form.entrantLastName.value
+  document.getElementById('combinedComfirmation').innerHTML = ('Thank you for entering the drawing ' + firstName + ' ' + lastName)
+  document
+}

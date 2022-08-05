@@ -52,8 +52,33 @@ app.use((req, res, next) => {
 //connects to mongoDB database
 main().catch(err => console.log(err));
 async function main() {
-  await mongoose.connect('mongodb+srv://admin-noah:dHFXK7gVTNhi5RA@vulnerable-web-app.fli3j.mongodb.net/UserDB?retryWrites=true&w=majority');
+  await mongoose.connect('mongodb://localhost:27017/UserDB');
 }
+
+const user1 = new User({
+  email: 'todd.gill@gmail.com',
+  password: 'Batman123!'
+})
+
+const user2 = new User({
+  email: 'emma.daniels@gmail.com',
+  password: 'ChicagoSKY12#$'
+})
+
+const user3 = new User({
+  email: 'zoey.alberts@gmail.com',
+  password: 'Christmas1995'
+})
+
+const defaultUsers = [user1, user2, user3];
+
+User.insertMany(defaultUsers, function (err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Successfully logged default users to database');
+  }
+})
 
 // --------------------Get Routes------------------------
 
@@ -87,6 +112,15 @@ app.get('/xsschallenge', (req, res) => {
   res.render('xsschallenge.ejs', { searchResults: '' })
   // console.log(res.headersSent)
   // console.log(JSON.stringify(req.headers))
+})
+
+app.get('/xsschallengetwo', (req, res) => {
+  res.set('X-XSS-Protection', '0')
+  res.render('xsschallengetwo.ejs')
+})
+
+app.get('/xsschallengethree', (req, res) => {
+  res.render('xsschallengethree.ejs')
 })
 
 app.get('/account', checkAuthenticated, (req, res) => {
