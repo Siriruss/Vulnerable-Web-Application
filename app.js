@@ -107,20 +107,29 @@ app.get('/sstihome', (req, res) => {
 })
 
 app.get('/xsschallenge', (req, res) => {
-  //res.set('X-XSS-Protection', '0')
-  //res.set('Content-Security-Policy', "script-src *")
   res.render('xsschallenge.ejs', { searchResults: '' })
-  // console.log(res.headersSent)
-  // console.log(JSON.stringify(req.headers))
 })
 
-app.get('/xsschallengetwo', (req, res) => {
-  res.set('X-XSS-Protection', '0')
-  res.render('xsschallengetwo.ejs')
+app.get('/xsschallengedup', (req, res) => {
+  let searchRequest = req.query.searchValue;
+  console.log(searchRequest);
+
+  res.render('xsschallengedup.ejs', { searchReq: searchRequest })
 })
 
-app.get('/xsschallengethree', (req, res) => {
-  res.render('xsschallengethree.ejs')
+app.get('/xsschallengenoscript', (req, res) => {
+  res.render('xsschallengenoscript.ejs', { searchReqNS: '' })
+})
+
+app.get('/xsschallengeDOM', (req, res) => {
+  let lang = req.query.language
+  res.render('xsschallengeDOM.ejs', { language: lang || 'english' })
+})
+
+app.get('/xsschallengetwoinputs', (req, res) => {
+  let fullName = (req.query.firstName + ' ' + req.query.lastName)
+
+  res.render('xsschallengetwoinputs.ejs', { fullNameOutput: fullName })
 })
 
 app.get('/account', checkAuthenticated, (req, res) => {
@@ -137,6 +146,17 @@ app.get('/logout', checkAuthenticated, (req, res, next) => {
 })
 
 // --------------------Post Routes------------------------
+
+app.post('/xsschallengenoscript', (req, res) => {
+  let searchRequestNS = req.body.searchValue;
+  let notValid = req.body.searchValue.toLowerCase().includes('script')
+
+  if (notValid == true) {
+    res.render('xsschallengenoscript.ejs', { searchReqNS: 'Nice try, but scripts are not allowed here!' })
+  } else {
+    res.render('xsschallengenoscript.ejs', { searchReqNS: searchRequestNS })
+  }
+})
 
 //creates and saves user object if valid during registration
 app.post('/register', checkNotAuthenticated, (req, res) => {
@@ -209,3 +229,6 @@ function checkNotAuthenticated(req, res, next) {
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 })
+
+//res.set('X-XSS-Protection', '0')
+//res.set('Content-Security-Policy', "script-src *")

@@ -5,17 +5,17 @@
     <div class="col-md-5 p-lg-5 mx-auto my-5">
       <h1 class="display-4 fw-normal">Enter Your name to join the drawing!</h1>
       <p class="lead fw-normal">One lucky winner will recieve absolutly nothing!</p>
-      <form name="xsschallenge2form"action="/xsschallenge" method="post">
+      <form name="xsschallenge3form"action="/xsschallengetwoinputs" method="get">
         <div class="form-group">
-          <input type="text" class="form-control" id="name-field" name="entrantName" placeholder='Type Here'>
+          <input type="text" class="form-control" id="firstname-field" name="firstName" placeholder='First Name' maxlength="15">
+          <input type="text" class="form-control" id="lastname-field" name="lastName" placeholder='Last Name' maxlength="70">
         </div>
-        <input type="submit" name="Enter" value="Enter" onclick="check(); return false">
-        <!-- <button class="btn btn-outline-secondary" id="xsstwosubmit-button" type="submit" name='Enter' onclick="check(); return false">Enter Drawing</button> -->
+        <button class="btn btn-outline-secondary" type="submit" name='Submit'>Submit</button>
       </form>
       <br>
       <br>
       <div>
-        <h2 id="entranceConfirmation"></h2>
+        <h2> <%- fullNameOutput %> </h2>
       </div>
     </div>
   </div>
