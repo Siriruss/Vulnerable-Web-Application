@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+
+<div class="top-item">
+  <main class="form-signin w-100 m-auto">
+    <form action="/noSQLInjectionGet" method="GET">
+      <img class="mb-4" src="/Images/BHISlogo.png" alt="" width="250" height="250">
+      <h1 class="h3 mb-3 fw-normal">This is a challenge!</h1>
+
+      <p class="error"><%=  errorMessage  %></p>
+
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Return</button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2008</p>
+    </form>
+  </main>
+</div>
+
+<%- include('partials/footer') %>

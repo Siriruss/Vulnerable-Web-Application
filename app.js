@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 //Required Modules and initialize variables
+const http = require('http')
 const express = require('express');
 const _ = require('lodash');
 const mongoose = require('mongoose')
@@ -66,24 +67,30 @@ const user2 = new User({
 })
 
 const user3 = new User({
-  email: 'zoey.alberts@gmail.com',
+  email: 'admin',
   password: 'Christmas1995'
 })
 
 const defaultUsers = [user1, user2, user3];
 
-User.insertMany(defaultUsers, function (err) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('Successfully logged default users to database');
-  }
-})
-
 // --------------------Get Routes------------------------
 
 app.get('/', (req, res) => {
-  res.render('home.ejs')
+
+  User.find({}, function (err, foundUsers) {
+    if (foundUsers.length === 0) {
+      User.insertMany(defaultUsers, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Successfully logged default users to database');
+        }
+      })
+      res.redirect('/')
+    } else {
+      res.render('home.ejs')
+    }
+  })
 })
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -99,11 +106,27 @@ app.get('/xsshome', (req, res) => {
 })
 
 app.get('/ssrfhome', (req, res) => {
+  res.render('ssrfhome.ejs')
+})
+
+app.get('/ssrfchallenge', (req, res) => {
   res.render('ssrfchallenge.ejs')
+})
+
+app.get('/ssrfchallengetwo', (req, res) => {
+  res.render('ssrfchallengetwo.ejs')
+})
+
+app.get('/ssrfchallengethree', (req, res) => {
+  res.render('ssrfchallengethree.ejs')
 })
 
 app.get('/sstihome', (req, res) => {
   res.render('sstihome.ejs')
+})
+
+app.get('/NOSQLhome', (req, res) => {
+  res.render('NOSQLhome.ejs')
 })
 
 app.get('/xsschallenge', (req, res) => {
@@ -127,9 +150,7 @@ app.get('/xsschallengeDOM', (req, res) => {
 })
 
 app.get('/xsschallengetwoinputs', (req, res) => {
-  let fullName = (req.query.firstName + ' ' + req.query.lastName)
-
-  res.render('xsschallengetwoinputs.ejs', { fullNameOutput: fullName })
+  res.render('xsschallengetwoinputs.ejs', { fullNameOutput: '' })
 })
 
 app.get('/account', checkAuthenticated, (req, res) => {
@@ -145,7 +166,57 @@ app.get('/logout', checkAuthenticated, (req, res, next) => {
   });
 })
 
+app.get('/noSQLSuccess', (req, res) => {
+  User.findOne({ email: req.query.email, password: req.query.password }, (err, verifiedUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (verifiedUser) {
+        console.log(verifiedUser, req.query.email, req.query.password);
+        res.render('noSQLSuccess.ejs', { errorMessage: 'Congrats' })
+      } else {
+        console.log(verifiedUser, req.query.email, req.query.password);
+        res.render('noSQLInjectionGET.ejs', { errorMessage: 'Authention Failed, Please try again' })
+      }
+    }
+  })
+})
+
+app.get('/noSQLInjectionGET', (req, res) => {
+  res.render('noSQLInjectionGET.ejs', { errorMessage: '' })
+})
+
+app.get('/noSQLInjectionPOST', (req, res) => {
+  res.render('noSQLInjectionPost.ejs', { errorMessage: '' })
+})
+
+
 // --------------------Post Routes------------------------
+app.post('/ssrfchallengetwo', (req, res) => {
+  let url = req.body.urlValue
+
+  http.get('url', res => {
+    let data = [];
+
+  })
+})
+
+
+app.post('/xsschallengetwoinputs', (req, res) => {
+  let firstName = req.body.firstName
+  let lastName = req.body.lastName
+  let fullName = (firstName + ' ' + lastName)
+
+  if (firstName.length > 8 || lastName.length > 70) {
+    res.render('xsschallengetwoinputs.ejs', { fullNameOutput: 'Seems like you may be doing something suspicious with a name that long. Please try again.' })
+  } else {
+    if (lastName.toLowerCase().includes('<script>')) {
+      res.render('xsschallengetwoinputs.ejs', { fullNameOutput: 'Starting scripts here is not allowed. Please try again.' })
+    } else {
+      res.render('xsschallengetwoinputs.ejs', { fullNameOutput: fullName })
+    }
+  }
+})
 
 app.post('/xsschallengenoscript', (req, res) => {
   let searchRequestNS = req.body.searchValue;
@@ -208,6 +279,28 @@ app.post('/xsschallenge', (req, res) => {
   console.log(userInput);
   res.send(userInput)
 })
+
+app.post('/noSQLInjectionPOST', (req, res) => {
+  User.findOne({ email: req.body.email, password: req.body.password }, (err, verifiedUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (verifiedUser) {
+        console.log(verifiedUser, req.body.email, req.body.password);
+        res.render('noSQLSuccess.ejs', { errorMessage: 'Congrats' })
+      } else {
+        console.log(verifiedUser, req.body.email, req.body.password);
+        res.render('noSQLInjectionPOST.ejs', { errorMessage: 'Authention Failed, Please try again' })
+      }
+    }
+  })
+})
+
+app.post('/ssrfchallenge', (req, res) => {
+  let imgURL = req.body.urlValue
+
+})
+
 
 //prevents user from accessing routes that require authentication
 function checkAuthenticated(req, res, next) { //
