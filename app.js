@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 //Required Modules and initialize variables
 const http = require('http')
+const https = require('https')
 const express = require('express');
 const _ = require('lodash');
 const mongoose = require('mongoose')
@@ -114,11 +115,11 @@ app.get('/ssrfchallenge', (req, res) => {
 })
 
 app.get('/ssrfchallengetwo', (req, res) => {
-  res.render('ssrfchallengetwo.ejs')
+  res.render('ssrfchallengetwo.ejs', { newImageURL: '' })
 })
 
 app.get('/ssrfchallengethree', (req, res) => {
-  res.render('ssrfchallengethree.ejs')
+  res.render('ssrfchallengethree.ejs', { newImageURL: '' })
 })
 
 app.get('/sstihome', (req, res) => {
@@ -192,13 +193,27 @@ app.get('/noSQLInjectionPOST', (req, res) => {
 
 
 // --------------------Post Routes------------------------
+app.post('/ssrfchallengethree', (req, res) => {
+  let url = req.body.urlValue
+
+  https.get(url, (response) => {
+    let data = ''
+    response.on('data', (chunk) => {
+      data += chunk
+    })
+
+    response.on('end', () => {
+      console.log(data);
+    })
+  })
+
+  res.render('ssrfchallengethree.ejs')
+})
+
 app.post('/ssrfchallengetwo', (req, res) => {
   let url = req.body.urlValue
 
-  http.get('url', res => {
-    let data = [];
-
-  })
+  res.render('ssrfchallengetwo.ejs', { newImageURL: url })
 })
 
 

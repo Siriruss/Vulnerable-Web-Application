@@ -2,19 +2,20 @@
 
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
   <div class="col-md-5 p-lg-5 mx-auto my-5">
-    <h1 class="display-4 fw-normal">Add an image to the wall (Default Packages)</h1>
+    <h1 class="display-4 fw-normal">Add an image to the wall (JS)</h1>
     <p class="lead fw-normal">Enter any image URL into the box below and press enter to add it.</p>
-    <form action="/ssrfchallenge" method="post">
+    <form action="/ssrfchallengetwo" method="post">
       <div class="form-group">
-        <input type="url" class="form-control" id="newImageURL" name="urlValue" placeholder='Type URL Here'>
+        <input type="url" class="form-control" name="urlValue" placeholder='Type URL Here'>
       </div>
-      <button class="btn btn-outline-secondary" id="addImage-button" type="button" name='addImage'>Add</button>
+      <button class="btn btn-outline-secondary" type="submit" name='addImage'>Add</button>
     </form>
   </div>
 </div>
 
 <div class="mx-auto">
-  <div class="mx-auto overflow-hidden" id="addedImageDiv">
+  <div class="mx-auto overflow-hidden">
+    <img src="<%- newImageURL %>" alt="">
   </div>
 </div>
 
