@@ -16,6 +16,11 @@ $(document).ready(function () {
 
 })
 
+// function randomTool() {
+//   selectedTool = 'CredKing'
+//   document.getElementById('toolGenerator').value = ('http://localhost:4000/tools')
+// }
+
 function check() {
   document.getElementById('entranceConfirmation').innerHTML = ('Thank you for entering the drawing ' + document.xsschallenge2form.entrantName.value)
 }

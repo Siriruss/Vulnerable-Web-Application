@@ -114,12 +114,8 @@ app.get('/ssrfchallenge', (req, res) => {
   res.render('ssrfchallenge.ejs')
 })
 
-app.get('/ssrfchallengetwo', (req, res) => {
-  res.render('ssrfchallengetwo.ejs', { newImageURL: '' })
-})
-
-app.get('/ssrfchallengethree', (req, res) => {
-  res.render('ssrfchallengethree.ejs', { newImageURL: '' })
+app.get('/ssrfchallengefour', (req, res) => {
+  res.render('ssrfchallengefour.ejs', { foundToolName: '', foundToolDescription: '' })
 })
 
 app.get('/sstihome', (req, res) => {
@@ -130,11 +126,11 @@ app.get('/NOSQLhome', (req, res) => {
   res.render('NOSQLhome.ejs')
 })
 
-app.get('/xsschallenge', (req, res) => {
+app.get('/xsschallengejquery', (req, res) => {
   res.render('xsschallenge.ejs', { searchResults: '' })
 })
 
-app.get('/xsschallengedup', (req, res) => {
+app.get('/xsschallengeejs', (req, res) => {
   let searchRequest = req.query.searchValue;
   console.log(searchRequest);
 
@@ -193,27 +189,21 @@ app.get('/noSQLInjectionPOST', (req, res) => {
 
 
 // --------------------Post Routes------------------------
-app.post('/ssrfchallengethree', (req, res) => {
-  let url = req.body.urlValue
+app.post('/ssrfchallengefour', (req, res) => {
+  let randomTool = req.body.getTool
 
-  https.get(url, (response) => {
+  let foundTool = http.get(randomTool, (response) => {
     let data = ''
     response.on('data', (chunk) => {
       data += chunk
     })
 
     response.on('end', () => {
-      console.log(data);
+      let parsedTool = JSON.parse(data)
+      let selectedTool = parsedTool[0]
+      res.render('\ssrfchallengefour.ejs', { foundToolName: selectedTool.name, foundToolDescription: selectedTool.description })
     })
   })
-
-  res.render('ssrfchallengethree.ejs')
-})
-
-app.post('/ssrfchallengetwo', (req, res) => {
-  let url = req.body.urlValue
-
-  res.render('ssrfchallengetwo.ejs', { newImageURL: url })
 })
 
 
@@ -287,7 +277,7 @@ app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
   failureRedirect: '/login'
 }))
 
-app.post('/xsschallenge', (req, res) => {
+app.post('/xsschallengejquery', (req, res) => {
   //res.set('X-XSS-Protection', '0')
   res.set('Content-Security-Policy', "script-src * 'unsafe-inline'")
   let userInput = req.body.searchValue
@@ -311,12 +301,6 @@ app.post('/noSQLInjectionPOST', (req, res) => {
   })
 })
 
-app.post('/ssrfchallenge', (req, res) => {
-  let imgURL = req.body.urlValue
-
-})
-
-
 //prevents user from accessing routes that require authentication
 function checkAuthenticated(req, res, next) { //
   if (req.isAuthenticated()) {
@@ -337,6 +321,3 @@ function checkNotAuthenticated(req, res, next) {
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 })
-
-//res.set('X-XSS-Protection', '0')
-//res.set('Content-Security-Policy', "script-src *")
