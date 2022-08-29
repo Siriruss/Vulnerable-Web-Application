@@ -1,5 +1,6 @@
 const express = require('express')
 let router = express.Router()
+const defaultUsers = require('../config/db.config.js')
 
 router.route('/')
   .get((req, res) => {
