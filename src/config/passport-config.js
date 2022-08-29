@@ -1,7 +1,7 @@
 //Required modules and initialize variables
 const LocalStrategy = require('passport-local').Strategy
 const argon2 = require('argon2');
-const User = require('./models/User.js')
+const User = require('../models/User.js')
 
 //Authenticates a user upon login and deauthenticates a user upon logout
 function initialize(passport, getUserById) {

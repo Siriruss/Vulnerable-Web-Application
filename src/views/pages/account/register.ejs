@@ -1,8 +1,8 @@
-<%- include('partials/header') %>
+<%- include('../../partials/header') %>
 
 <div class="top-item">
   <main class="form-signin w-100 m-auto">
-    <form action="/register" method="POST" autocomplete="off">
+    <form action="/account/register" method="POST" autocomplete="off">
       <img class="mb-4" src="/Images/BHISlogo.png" alt="" width="250" height="250">
       <h1 class="h3 mb-3 fw-normal">Enter your information to register</h1>
 
@@ -21,7 +21,7 @@
         <label for="verifiedPassword">Retype Password</label>
       </div>
 
-      <p>Already have an account? <a href="/login">Click to login</a></p>
+      <p>Already have an account? <a href="/account/login">Click to login</a></p>
       <p class="error"><%=  errorMessage  %></p>
 
       <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
@@ -30,4 +30,4 @@
   </main>
 </div>
 
-<%- include('partials/footer') %>
+<%- include('../../partials/footer') %>

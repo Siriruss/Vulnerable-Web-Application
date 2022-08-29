@@ -1,13 +1,13 @@
-<%- include('partials/header') %>
+<%- include('../../partials/header') %>
 
 <div class="top-item">
   <main class="form-signin w-100 m-auto">
-    <form action="/noSQLInjectionPOST" method="POST">
+    <form action="/account/login" method="POST">
       <img class="mb-4" src="/Images/BHISlogo.png" alt="" width="250" height="250">
-      <h1 class="h3 mb-3 fw-normal">NOT YET FUNCTIONAL</h1>
+      <h1 class="h3 mb-3 fw-normal">Please Login</h1>
 
       <div class="form-floating">
-        <input type="text" class="form-control" name="email" placeholder="name@example.com">
+        <input type="email" class="form-control" name="email" placeholder="name@example.com" value='<%= usedEmail %>'>
         <label for="email">Email address</label>
       </div>
       <div class="form-floating">
@@ -17,7 +17,7 @@
 
       <p class="error"><%=  errorMessage  %></p>
 
-      <p>Need and account? <a href="/register">Click here to register</a></p>
+      <p>Need and account? <a href="/account/register">Click here to register</a></p>
 
       <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">&copy; 2008</p>
@@ -25,4 +25,4 @@
   </main>
 </div>
 
-<%- include('partials/footer') %>
+<%- include('../../partials/footer') %>

@@ -1,18 +1,18 @@
-<%- include('partials/header') %>
+<%- include('../../partials/header') %>
 
 <main>
   <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     <div class="col-md-5 p-lg-5 mx-auto my-5">
       <h1 class="display-4 fw-normal">Search For a Tool</h1>
       <p class="lead fw-normal">Black Hills Information Security leads and takes part in a number of different (and awesome) open-source projects. Check them out!</p>
-      <form action="/xsschallengedup" method="GET" autocomplete="off">
+      <form action="/xsschallengenoscript" method="post" autocomplete="off">
         <div class="form-group">
           <input type="text" class="form-control" name="searchValue" placeholder='Type Here'>
         </div>
         <button class="btn btn-outline-secondary" type="submit" name='Submit'>Search</button>
       </form>
       <div>
-        <p><%- searchReq %></p>
+        <p><%- searchReqNS %></p>
       </div>
     </div>
   </div>
@@ -92,4 +92,4 @@
   </div>
 </main>
 
-<%- include('partials/footer') %>
+<%- include('../../partials/footer') %>
