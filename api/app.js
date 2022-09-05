@@ -95,25 +95,47 @@ app.route('/tools')
 
 // Requests Targeting Specific Tools
 
-app.route('/tools/:randomTool')
+app.route('/tools/:toolName')
 
   .get((req, res) => {
-    Tool.findOne({ name: req.params.randomTool }, (err, foundTool) => {
+    Tool.findOne({ name: req.params.toolName }, (err, foundTool) => {
       if (foundTool) {
         res.send(foundTool)
       } else {
-        res.send("No tools were found!")
+        res.send("No tools were found.")
       }
     })
   })
 
-// .put((req,res) => {
-//
-// })
+  .put((req, res) => {
+    Tool.replaceOne({ name: req.params.toolName }, { name: req.body.name, description: req.body.description }, { overwrite: true }, (err) => {
+      if (!err) {
+        res.send("Successfully updated article.")
+      } else {
+        res.send("Tool not found.")
+      }
+    })
+  })
 
-//.patch().delete()
+  .patch((req, res) => {
+    Tool.updateOne({ name: req.params.toolName }, { $set: req.body }, (err) => {
+      if (!err) {
+        res.send("Successfully patched tool description.");
+      } else {
+        res.send("Tool not found.")
+      }
+    })
+  })
 
-
+  .delete((req, res) => {
+    Tool.deleteOne({ name: req.params.toolName }, (err) => {
+      if (!err) {
+        res.send("Successfully deleted tool.")
+      } else {
+        res.send("Tool not found.")
+      }
+    })
+  })
 
 app.listen(4000, function () {
   console.log('API started on port 4000');
