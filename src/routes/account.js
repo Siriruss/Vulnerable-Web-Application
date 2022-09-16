@@ -60,10 +60,11 @@ router.route('/register')
 
               newUser.save((err) => { //saves new user object to database with hashed password
                 if (err) {
-                  res.redirect('/account/register');
-                  console.log(err);
+                  res.redirect('/account/register', {
+                    errorMessage: 'Seems like there was an error on our end. Please try again.'
+                  });
                 } else {
-                  res.redirect('/account/login');
+                  res.render('pages/account/successfulRegistration');
                 }
               })
             })
