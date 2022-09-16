@@ -17,27 +17,23 @@ This vulnerable web application has been created for use as a teaching aid as we
 git clone https://git.nopsled.me/nrussaw/bhis-vulnerable-web-application.git
 ```
 
-3) Once the project is cloned or downloaded, navigate to the project folder and separate the API folder from the main project. (These currently run as two separate applications)
-
-2) Navigate to the Vulnerable Web Application folder on your system and create a new blank .env file.
+3) Navigate to the Vulnerable Web Application folder on your system and create a new blank .env file.
 ```sh
 sudo nano .env
 ```
 
-3) In the new .env file add the following text and save the file.
+4) In the new .env file add the following text and save the file.
 ```sh
 SESSION_SECRET=anyrandomstring
 ```
 
-4) Open two instances of your favorite Terminal. In the first instance, navigate to the Vulnerable Web Application folder. In the second instance, navigate to the API folder that you previously extracted.
-
-5) In both terminals run the following commands to download all required node modules and start the applications. (Commands need to be run in both terminals for each application respectively)
+5) In any terminal, run the following command to download all required node modules and start the application and API.
 
 ```sh
 npm i
-node app.js
+npm start
 ```
 
-5) If you have been successful so far you should receive a "Server/API Started on port:XXXX" message for each application.
+6) If you have been successful so far you should receive a "Server/API Started on port:XXXX" message for each application.
 
-6) In any browser, navigate to localhost:3000 to begin utilizing the vulnerable web application.
+7) In any browser, navigate to localhost:3000 to begin utilizing the vulnerable web application.
