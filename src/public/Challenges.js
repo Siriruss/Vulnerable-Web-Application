@@ -6,14 +6,6 @@ $(document).ready(function () {
 
   })
 
-  $('#addImage-button').click(function () {
-    let imageURL = $('#newImageURL').val()
-    let img = document.createElement('img')
-    img.src = imageURL
-
-    $('#addedImageDiv').prepend(img)
-  })
-
 })
 
 // function randomTool() {

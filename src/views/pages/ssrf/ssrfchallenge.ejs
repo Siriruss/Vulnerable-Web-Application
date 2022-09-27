@@ -4,17 +4,18 @@
   <div class="col-md-5 p-lg-5 mx-auto my-5">
     <h1 class="display-4 fw-normal">Add an image to the wall (original)</h1>
     <p class="lead fw-normal">Enter any image URL into the box below and press enter to add it.</p>
-    <form action="/ssrfchallenge" method="post">
+    <form action="/ssrf/challenge" method="post">
       <div class="form-group">
         <input type="url" class="form-control" id="newImageURL" name="urlValue" placeholder='Type URL Here'>
       </div>
-      <button class="btn btn-outline-secondary" id="addImage-button" type="button" name='addImage'>Add</button>
+      <button class="btn btn-outline-secondary" id="addImage-button" type="submit" name='addImage'>Add</button>
     </form>
   </div>
 </div>
 
 <div class="mx-auto">
-  <div class="mx-auto overflow-hidden" id="addedImageDiv">
+  <div class="mx-auto overflow-hidden" id="downloadedImageDiv">
+    <img src="<%= typeof file != 'undefined' ? file: '' %>" class='img-responsive' alt="">
   </div>
 </div>
 

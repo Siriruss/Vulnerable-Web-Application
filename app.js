@@ -13,9 +13,12 @@ const _ = require('lodash');
 const mongoose = require('mongoose')
 const path = require('path');
 const ejs = require('ejs');
+const multer = require('multer')
+const fs = require('fs')
 const argon2 = require('argon2');
 const User = require('./src/models/User.js')
 const app = express();
+
 
 //allows access to static files
 app.use(express.static('./src/public'));

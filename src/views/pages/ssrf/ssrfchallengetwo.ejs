@@ -1,0 +1,22 @@
+<%- include('../../partials/header') %>
+
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+  <div class="col-md-5 p-lg-5 mx-auto my-5">
+    <h1 class="display-4 fw-normal">Upload Files Here</h1>
+    <p class="lead fw-normal">Upload any files that you would like to add to your user profile.</p>
+    <form enctype="multipart/form-data" action="/ssrf/challengetwo" method="post">
+      <div class="form-group">
+        <input type="file" class="form-control" id="newImageURL" name="sampleFile" placeholder='Type URL Here'>
+      </div>
+      <button class="btn btn-outline-secondary" id="addImage-button" type="submit" name='submit'>Upload Image</button>
+    </form>
+  </div>
+</div>
+
+<div class="mx-auto">
+  <div class="mx-auto overflow-hidden" id="uploadedImageDiv">
+    <img src="<%= typeof file != 'undefined' ? file: '' %>" alt="">
+  </div>
+</div>
+
+<%- include('../../partials/footer') %>
