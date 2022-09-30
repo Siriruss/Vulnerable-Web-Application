@@ -5,6 +5,7 @@ const https = require('https')
 const multer = require('multer')
 const path = require('path');
 const fs = require('fs')
+const url = require('url')
 let router = express.Router()
 
 //provides route for server side request forgery challenges home page
@@ -19,12 +20,25 @@ router.route('/challenge')
     res.render('pages/ssrf/ssrfchallenge.ejs')
   })
 
-  //Downloads a file for a URL that the user inputs to the downloads folder on the server. The downloaded file is then displayed back to the user.
+  //Downloads a file from a URL that the user inputs to the downloads folder on the server. The downloaded file is then displayed back to the user.
   .post((req, res) => {
-    let url = req.body.urlValue
-    let filename = path.basename(url)
+    let fileURL = req.body.urlValue
+    let filename = path.basename(fileURL)
+    let urlProtocol = url.parse(fileURL).protocol
 
-    const downloadReq = https.get(url, function (res) {
+    var adapterFor = (function () {
+      var url = require('url'),
+        adapters = {
+          'http:': require('http'),
+          'https:': require('https'),
+        };
+
+      return function (inputUrl) {
+        return adapters[url.parse(inputUrl).protocol]
+      }
+    }());
+
+    const downloadReq = adapterFor(fileURL).get(fileURL, function (res) {
       const fileStream = fs.createWriteStream('./src/public/Downloads/' + filename)
       res.pipe(fileStream)
 
