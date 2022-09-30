@@ -49,12 +49,19 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+//Sets user as local variable to adjust navbar
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next()
+})
+
 //connects to mongoDB database
 main().catch(err => console.log(err));
 async function main() {
   await mongoose.connect('mongodb://localhost:27017/UserDB');
 }
 
+//allows use of route file
 require('./src/config/routes')(app);
 
 //sets the port for the server to run on

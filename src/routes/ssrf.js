@@ -1,3 +1,4 @@
+//Required Modules and initialize variables
 const express = require('express')
 const http = require('http')
 const https = require('https')
@@ -6,16 +7,19 @@ const path = require('path');
 const fs = require('fs')
 let router = express.Router()
 
+//provides route for server side request forgery challenges home page
 router.route('/home')
   .get((req, res) => {
     res.render('pages/ssrf/ssrfhome.ejs')
   })
 
+//provides route for image download SSRF challenge
 router.route('/challenge')
   .get((req, res) => {
     res.render('pages/ssrf/ssrfchallenge.ejs')
   })
 
+  //Downloads a file for a URL that the user inputs to the downloads folder on the server. The downloaded file is then displayed back to the user.
   .post((req, res) => {
     let url = req.body.urlValue
     let filename = path.basename(url)
@@ -45,12 +49,14 @@ router.route('/challenge')
     })
   })
 
+//provides a route for the file upload SSRF challenge
 router.route('/challengetwo')
 
   .get((req, res) => {
     res.render('pages/ssrf/ssrfchallengetwo.ejs')
   })
 
+  //Uploads a file provided by the user to the uploads folder on the server. The uploaded file is then displayed back to the user.
   .post((req, res) => {
     let storage = multer.diskStorage({
       destination: function (req, file, callback) {
@@ -79,11 +85,13 @@ router.route('/challengetwo')
     })
   })
 
+//provides route for API calling SSRF challenge
 router.route('/challengefour')
   .get((req, res) => {
     res.render('pages/ssrf/ssrfchallengefour.ejs', { foundToolName: '', foundToolDescription: '' })
   })
 
+  //calls API and returns a random tool ensuring the call is generated from the server.
   .post((req, res) => {
     let randomTool = req.body.getTool
 
@@ -101,4 +109,5 @@ router.route('/challengefour')
     })
   })
 
+//exports routes to be used throughout application
 module.exports = router

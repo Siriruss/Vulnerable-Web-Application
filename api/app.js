@@ -1,19 +1,24 @@
+//Required Modules and initialize variables
 const express = require('express')
 const ejs = require('ejs')
 const mongoose = require('mongoose')
 const Tool = require('./models/Tool.js')
-
 const app = express()
 
+//Allows application to parse data from post requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//Sets application to use ejs as view engine
 app.set('view engine', 'ejs')
 
+//allows access to static files
 app.use(express.static('public'))
 
+//connects to mongoDB database
 mongoose.connect('mongodb://localhost:27017/ToolDB', { useNewUrlParser: true })
 
+//Initializes these tools into the database on initial startup
 const tool1 = new Tool({
   name: 'CredKing',
   description: 'Password sprays against websites like Google’s GSuite are getting more and more difficult. CredKing looks to solve that problem by leveraging Amazon AWS Lambda to rotate IP addresses for each authentication attempt. Fully supporting all AWS Lambda regions, CredKing is a must-have tool for cracking external perimeters through password spraying!'
@@ -32,9 +37,9 @@ const tool3 = new Tool({
 const defaultTools = [tool1, tool2, tool3];
 
 // Requests Targeting All Tools
-
 app.route('/tools')
 
+  //Returns a random tool from the database and logs tools on initial get request
   .get((req, res) => {
     Tool.find({}, function (err, foundTools) {
       if (foundTools.length === 0) {
@@ -64,6 +69,7 @@ app.route('/tools')
     })
   })
 
+  //Can be used to create or add new tools
   .post((req, res) => {
     console.log(req.body.name);
     console.log(req.body.description);
@@ -82,6 +88,7 @@ app.route('/tools')
     })
   })
 
+  //used to delete tools from the database
   .delete((req, res) => {
     Tool.deleteMany((err) => {
       if (!err) {
@@ -93,8 +100,7 @@ app.route('/tools')
   })
 
 
-// Requests Targeting Specific Tools
-
+// Requests Targeting Specific Tools, All methods will only effect a singular tool. Use res.sends for descriptions
 app.route('/tools/:toolName')
 
   .get((req, res) => {
@@ -137,6 +143,7 @@ app.route('/tools/:toolName')
     })
   })
 
+//initializes API on port 4000
 app.listen(4000, function () {
   console.log('API started on port 4000');
 })

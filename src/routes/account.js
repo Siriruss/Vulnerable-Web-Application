@@ -1,3 +1,4 @@
+//Required Modules and initialize variables
 const session = require('express-session')
 const passport = require('passport');
 const express = require('express')
@@ -5,11 +6,13 @@ const mongoose = require('mongoose')
 const argon2 = require('argon2');
 let router = express.Router()
 
+//Provieds route to admin page
 router.route('/admin')
   .get(checkAuthenticated, (req, res) => {
     res.render('pages/account/admin.ejs')
   })
 
+//provides route to login page
 router.route('/login')
   .get(checkNotAuthenticated, (req, res) => {
     res.render('pages/account/login.ejs', { errorMessage: '', usedEmail: '' })
@@ -74,6 +77,7 @@ router.route('/register')
     })
   })
 
+//provides route to account page and prevents using back arrow to return after logout
 router.route('/account')
   .get(checkAuthenticated, (req, res) => {
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -96,4 +100,5 @@ function checkNotAuthenticated(req, res, next) {
   next()
 }
 
+//exports routes to be used in rest of application
 module.exports = router, checkAuthenticated, checkNotAuthenticated;
