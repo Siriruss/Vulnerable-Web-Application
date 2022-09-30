@@ -26,6 +26,7 @@ router.route('/challenge')
     let filename = path.basename(fileURL)
     let urlProtocol = url.parse(fileURL).protocol
 
+    //determines which protocol to use for downloading the file
     var adapterFor = (function () {
       var url = require('url'),
         adapters = {
